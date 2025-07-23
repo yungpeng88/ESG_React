@@ -1,5 +1,8 @@
 ﻿import React, { useState, useEffect } from "react";
 import "./App.css";
+import EmissionSourceEdit from "./components/EmissionSourceEdit";
+import EmissionActivityEdit from "./components/EmissionActivityEdit";
+import EmissionActivityReport from "./components/EmissionActivityReport";
 
 // 導入所有圖示
 import oilIcon from "/assets/img/oil.svg";
@@ -21,6 +24,16 @@ function App() {
   const [showYearMenu, setShowYearMenu] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState(1);
   const [showCompanyMenu, setShowCompanyMenu] = useState(false);
+  const [showEmissionSourceEdit, setShowEmissionSourceEdit] = useState(false);
+  const [showEmissionActivityEdit, setShowEmissionActivityEdit] =
+    useState(false);
+  const [showEmissionActivityReport, setShowEmissionActivityReport] =
+    useState(false);
+  const [emissionEditParams, setEmissionEditParams] = useState({
+    emissionName: "",
+    year: null,
+    company: "",
+  });
 
   const languages = {
     TW: "繁中",
@@ -63,6 +76,48 @@ function App() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [showLangMenu, showYearMenu, showCompanyMenu]);
 
+  // 處理排放源鑑別連結點擊
+  const handleEmissionSourceEdit = (emissionName) => {
+    setEmissionEditParams({
+      emissionName: emissionName,
+      year: selectedYear,
+      company: company[selectedCompany],
+    });
+    setShowEmissionSourceEdit(true);
+  };
+
+  // 處理活動數據蒐集連結點擊
+  const handleEmissionActivityEdit = (emissionName) => {
+    setEmissionEditParams({
+      emissionName: emissionName,
+      year: selectedYear,
+      company: company[selectedCompany],
+    });
+    setShowEmissionActivityEdit(true);
+  };
+
+  // 處理年度活動清單連結點擊
+  const handleEmissionActivityReport = (emissionName) => {
+    setEmissionEditParams({
+      emissionName: emissionName,
+      year: selectedYear,
+      company: company[selectedCompany],
+    });
+    setShowEmissionActivityReport(true);
+  };
+
+  const closeEmissionSourceEdit = () => {
+    setShowEmissionSourceEdit(false);
+  };
+
+  const closeEmissionActivityEdit = () => {
+    setShowEmissionActivityEdit(false);
+  };
+
+  const closeEmissionActivityReport = () => {
+    setShowEmissionActivityReport(false);
+  };
+
   const emissionData = {
     scope12: [
       {
@@ -71,9 +126,21 @@ function App() {
         titleEn: "Fuel",
         icon: oilIcon,
         links: [
-          { text: "排放源鑑別", href: "#" },
-          { text: "活動數據蒐集", href: "#" },
-          { text: "年度活動清單", href: "#" },
+          {
+            text: "排放源鑑別",
+            href: "#",
+            onClick: () => handleEmissionSourceEdit("Fuel"),
+          },
+          {
+            text: "活動數據蒐集",
+            href: "#",
+            onClick: () => handleEmissionActivityEdit("Fuel"),
+          },
+          {
+            text: "年度活動清單",
+            href: "#",
+            onClick: () => handleEmissionActivityReport("Fuel"),
+          },
         ],
       },
       {
@@ -82,9 +149,21 @@ function App() {
         titleEn: "Fuel Gas",
         icon: liquefiedGasIcon,
         links: [
-          { text: "排放源鑑別", href: "#" },
-          { text: "活動數據蒐集", href: "#" },
-          { text: "年度活動清單", href: "#" },
+          {
+            text: "排放源鑑別",
+            href: "#",
+            onClick: () => handleEmissionSourceEdit("Gas"),
+          },
+          {
+            text: "活動數據蒐集",
+            href: "#",
+            onClick: () => handleEmissionActivityEdit("Gas"),
+          },
+          {
+            text: "年度活動清單",
+            href: "#",
+            onClick: () => handleEmissionActivityReport("Gas"),
+          },
         ],
       },
       {
@@ -254,7 +333,16 @@ function App() {
           <div className="content">
             <div className="title1">{item.titleZh}</div>
             {item.links.map((link, index) => (
-              <a key={index} href={link.href}>
+              <a
+                key={index}
+                href={link.href}
+                onClick={(e) => {
+                  if (link.onClick) {
+                    e.preventDefault();
+                    link.onClick();
+                  }
+                }}
+              >
                 {link.text}
               </a>
             ))}
@@ -377,6 +465,7 @@ function App() {
 
       <div className="slogan-a">ESG Portal</div>
       <p className="slogan-b">There is no planet B</p>
+      {/* 主內容區域 */}
       <div className="container">
         <div className="tabs">
           <div className="tabs-header">
@@ -451,6 +540,36 @@ function App() {
           </div>
         </div>
       </div>
+
+      {/* 排放源鑑別模態框 */}
+      {showEmissionSourceEdit && (
+        <EmissionSourceEdit
+          emissionName={emissionEditParams.emissionName}
+          year={emissionEditParams.year}
+          company={emissionEditParams.company}
+          onClose={closeEmissionSourceEdit}
+        />
+      )}
+
+      {/* 活動數據蒐集模態框 */}
+      {showEmissionActivityEdit && (
+        <EmissionActivityEdit
+          emissionName={emissionEditParams.emissionName}
+          year={emissionEditParams.year}
+          company={emissionEditParams.company}
+          onClose={closeEmissionActivityEdit}
+        />
+      )}
+
+      {/* 年度活動清單模態框 */}
+      {showEmissionActivityReport && (
+        <EmissionActivityReport
+          emissionName={emissionEditParams.emissionName}
+          year={emissionEditParams.year}
+          company={emissionEditParams.company}
+          onClose={closeEmissionActivityReport}
+        />
+      )}
     </div>
   );
 }
