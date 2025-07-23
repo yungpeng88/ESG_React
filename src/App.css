@@ -1,0 +1,358 @@
+﻿/* ESG Portal CSS */
+:root {
+  --primary-color: #2c3e50;
+  --secondary-color: #3498db;
+  --accent-color: #e74c3c;
+  --success-color: #27ae60;
+  --warning-color: #f39c12;
+  --light-gray: #ecf0f1;
+  --dark-gray: #34495e;
+}
+
+/* 全螢幕應用程式樣式 */
+.snippet-body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--primary-color);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Header Styles */
+.slogan-a {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.slogan-b {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #ecf0f1;
+  margin-bottom: 40px;
+  font-style: italic;
+}
+
+/* Container */
+.container {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tabs Styles */
+.tabs {
+  width: 100%;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin-bottom: 30px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.tabs input[type="radio"] {
+  display: none;
+}
+
+/* 標籤頭部容器 - 一行顯示 */
+.tabs-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.tabs label {
+  display: block;
+  padding: 12px 24px;
+  margin: 0;
+  background: var(--light-gray);
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  white-space: nowrap;
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+}
+
+.tabs label:hover {
+  background: var(--secondary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.tabs input[type="radio"]:checked + label {
+  background: var(--primary-color);
+  color: white;
+  box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
+}
+
+/* Tab Content */
+.tab {
+  display: block;
+  padding: 20px 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.tab .row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 0;
+}
+
+/* Grid System - 全螢幕響應式 */
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.col-lg-4,
+.col-sm-6 {
+  /* Grid 佈局不需要這些類別，但保留以維持相容性 */
+  flex: none;
+  max-width: none;
+  padding: 0;
+}
+
+/* Card Styles */
+.card {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backface-visibility: hidden;
+  transition: transform 0.6s ease;
+}
+
+.face1 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: rotateY(180deg);
+}
+
+.face2 {
+  background: white;
+  color: var(--primary-color);
+  transform: rotateY(0deg);
+  flex-direction: column;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover .face1 {
+  transform: rotateY(0deg);
+}
+
+.card:hover .face2 {
+  transform: rotateY(-180deg);
+}
+
+.content {
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.title1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.content a {
+  display: block;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  padding: 8px 16px;
+  margin: 8px 0;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.content a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
+}
+
+.face2 img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.2));
+}
+
+/* Emoji 圖示樣式 */
+.emoji-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  text-align: center;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.1));
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+.sfont {
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+  margin-top: 5px;
+  font-style: italic;
+}
+
+/* Responsive Design - 全螢幕適配 */
+@media (max-width: 1200px) {
+  .tab .row {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 992px) {
+  .tab .row {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .snippet-body {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slogan-a {
+    font-size: 2.5rem;
+  }
+
+  .tabs-header {
+    gap: 8px;
+  }
+
+  .tabs label {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .card {
+    height: 250px;
+  }
+
+  .tab .row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .snippet-body {
+    padding: 10px;
+  }
+
+  .container {
+    padding: 0 10px;
+  }
+
+  .tabs {
+    padding: 15px;
+  }
+
+  .slogan-a {
+    font-size: 2rem;
+  }
+
+  .slogan-b {
+    font-size: 1rem;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Accessibility */
+.card:focus {
+  outline: 3px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+
+.tabs label:focus {
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+
+/* Loading State */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Error State */
+.error {
+  border: 2px solid var(--accent-color);
+  background: rgba(231, 76, 60, 0.1);
+}
