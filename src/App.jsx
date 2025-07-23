@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+﻿import React, { useState, useEffect } from "react";
 import "./App.css";
 
 // 導入所有圖示
@@ -14,6 +14,54 @@ import businessTravelIcon from "/assets/img/business_travel.svg";
 
 function App() {
   const [activeTab, setActiveTab] = useState("scope12");
+  const [username] = useState("Albert Peng");
+  const [currentLanguage, setCurrentLanguage] = useState("TW");
+  const [showLangMenu, setShowLangMenu] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [showYearMenu, setShowYearMenu] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState(1);
+  const [showCompanyMenu, setShowCompanyMenu] = useState(false);
+
+  const languages = {
+    TW: "繁中",
+    CN: "简中",
+    VN: "Tiếng Việt",
+    EN: "English",
+  };
+  const company = {
+    1: "000-1 仁寶電腦工業股份有限公司",
+    2: "000-2 仁寶電腦工業股份有限公司(平鎮廠) (PCP)",
+    3: "048 仁寶視訊電子(昆山)有限公司(CDE) (仁寶視訊) (KSD)",
+    4: "040 仁寶電子科技(昆山)有限公司 (CET) (KS1)",
+    5: "041 仁寶資訊工業(昆山)有限公司 (CIC) (KS2)",
+    6: "042 仁寶信息技術(昆山)有限公司 (CIT) (KS345)",
+    7: "045 仁寶數碼科技(昆山)有限公司 (CDT) (TCO)",
+  };
+  const currentCompany = company[1]; // 假設當前公司為 000-1 仁寶電腦工業股份有限公司
+  // 生成年份選項 (當前年份 -1 到 +3)
+  const currentYear = new Date().getFullYear();
+  const yearOptions = [];
+  for (let i = currentYear - 1; i <= currentYear + 3; i++) {
+    yearOptions.push(i);
+  }
+
+  // 點擊外部關閉選單
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showLangMenu && !event.target.closest(".language-selector")) {
+        setShowLangMenu(false);
+      }
+      if (showYearMenu && !event.target.closest(".year-selector")) {
+        setShowYearMenu(false);
+      }
+      if (showCompanyMenu && !event.target.closest(".company-selector")) {
+        setShowCompanyMenu(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [showLangMenu, showYearMenu, showCompanyMenu]);
 
   const emissionData = {
     scope12: [
@@ -229,6 +277,104 @@ function App() {
 
   return (
     <div className="snippet-body" id="body-pd">
+      {/* 左上角年份選擇器 */}
+      <div className="year-bar">
+        <div className="year-selector">
+          <div
+            className="year-current"
+            onClick={() => setShowYearMenu(!showYearMenu)}
+          >
+            📅 {selectedYear}
+            <span className="dropdown-arrow">▼</span>
+          </div>
+          {showYearMenu && (
+            <div className="year-menu">
+              {yearOptions.map((year) => (
+                <div
+                  key={year}
+                  className={`year-item ${
+                    selectedYear === year ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    setSelectedYear(year);
+                    setShowYearMenu(false);
+                  }}
+                >
+                  {year}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* 公司選擇器 */}
+        <div className="company-selector">
+          <div
+            className="company-current"
+            onClick={() => setShowCompanyMenu(!showCompanyMenu)}
+          >
+            🏢 {company[selectedCompany]}
+            <span className="dropdown-arrow">▼</span>
+          </div>
+          {showCompanyMenu && (
+            <div className="company-menu">
+              {Object.entries(company).map(([id, name]) => (
+                <div
+                  key={id}
+                  className={`company-item ${
+                    selectedCompany === parseInt(id) ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    setSelectedCompany(parseInt(id));
+                    setShowCompanyMenu(false);
+                  }}
+                >
+                  {name}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* 右上角使用者資訊和語系選擇 */}
+      <div className="top-bar">
+        {/* 語系選擇 */}
+        <div className="language-selector">
+          <div
+            className="language-current"
+            onClick={() => setShowLangMenu(!showLangMenu)}
+          >
+            🌐 {languages[currentLanguage]}
+            <span className="dropdown-arrow">▼</span>
+          </div>
+          {showLangMenu && (
+            <div className="language-menu">
+              {Object.entries(languages).map(([code, name]) => (
+                <div
+                  key={code}
+                  className={`language-item ${
+                    currentLanguage === code ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    setCurrentLanguage(code);
+                    setShowLangMenu(false);
+                  }}
+                >
+                  {name}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* 使用者資訊 */}
+        <div className="user-info">
+          <div className="user-avatar">👤</div>
+          <span className="username">{username}</span>
+        </div>
+      </div>
+
       <div className="slogan-a">ESG Portal</div>
       <p className="slogan-b">There is no planet B</p>
       <div className="container">
@@ -272,11 +418,11 @@ function App() {
             <input
               type="radio"
               name="tabs"
-              id="tabfour"
+              id="tabfive"
               checked={activeTab === "setup"}
               onChange={() => setActiveTab("setup")}
             />
-            <label htmlFor="tabfour">Setup</label>
+            <label htmlFor="tabfive">Setup</label>
           </div>
 
           <div className="tab">
