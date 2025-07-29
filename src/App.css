@@ -265,6 +265,27 @@
   text-align: center;
 }
 
+.logout-btn {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+  margin-left: 10px;
+}
+
+.logout-btn:hover {
+  background: rgba(76, 175, 80, 0.1);
+}
+
 .dropdown-arrow {
   font-size: 0.7rem;
   margin-left: 8px;
@@ -607,12 +628,13 @@
 
 .face1 {
   background: linear-gradient(135deg, #4caf50 0%, #66bb6a 50%, #81c784 100%);
+  /* background: linear-gradient(145deg, #ffffff 0%, #f1f8e9 100%); */
   color: white;
   transform: rotateY(180deg);
 }
 
 .face2 {
-  background: linear-gradient(145deg, #ffffff 0%, #f1f8e9 100%);
+  background: linear-gradient(135deg, #b8eb9b 0%, #6fdf75 50%, #438f47 100%);
   color: var(--primary-color);
   transform: rotateY(0deg);
   flex-direction: column;

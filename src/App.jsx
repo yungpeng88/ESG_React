@@ -3,6 +3,9 @@ import "./App.css";
 import EmissionSourceEdit from "./components/EmissionSourceEdit";
 import EmissionActivityEdit from "./components/EmissionActivityEdit";
 import EmissionActivityReport from "./components/EmissionActivityReport";
+import CompanyManager from "./components/CompanyManager";
+import LocationManager from "./components/LocationManager";
+import Login from "./components/Login";
 
 // 導入所有圖示
 import oilIcon from "/assets/img/oil.svg";
@@ -10,14 +13,19 @@ import liquefiedGasIcon from "/assets/img/liquefied_gas.svg";
 import septicTankIcon from "/assets/img/septic_tank.svg";
 import fireexIcon from "/assets/img/fireex.svg";
 import refrigerantIcon from "/assets/img/refrigerant.svg";
-import electricityIcon from "/assets/img/electricity.svg";
+import electricityIcon from "/assets/img/power.svg";
+import otherIcon from "/assets/img/WD401.png";
 import waterIcon from "/assets/img/water.svg";
 import wasteIcon from "/assets/img/waste.svg";
-import businessTravelIcon from "/assets/img/business_travel.svg";
+import businessTravelIcon from "/assets/img/BusinessTravel1.png";
+import affairsIcon from "/assets/img/Cash1.png";
+import inventoryIcon from "/assets/img/inventory.svg";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
   const [activeTab, setActiveTab] = useState("scope12");
-  const [username] = useState("Albert Peng");
+  const [username, setUsername] = useState("Albert Peng");
   const [currentLanguage, setCurrentLanguage] = useState("TW");
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -29,6 +37,8 @@ function App() {
     useState(false);
   const [showEmissionActivityReport, setShowEmissionActivityReport] =
     useState(false);
+  const [showCompanyManager, setShowCompanyManager] = useState(false);
+  const [showLocationManager, setShowLocationManager] = useState(false);
   const [emissionEditParams, setEmissionEditParams] = useState({
     emissionName: "",
     year: null,
@@ -118,6 +128,26 @@ function App() {
     setShowEmissionActivityReport(false);
   };
 
+  const closeCompanyManager = () => {
+    setShowCompanyManager(false);
+  };
+
+  const closeLocationManager = () => {
+    setShowLocationManager(false);
+  };
+
+  const handleLogin = (loginData) => {
+    setIsAuthenticated(true);
+    setUserInfo(loginData);
+    setUsername(loginData.username);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setUserInfo(null);
+    setUsername("Albert Peng");
+  };
+
   const emissionData = {
     scope12: [
       {
@@ -152,17 +182,17 @@ function App() {
           {
             text: "排放源鑑別",
             href: "#",
-            onClick: () => handleEmissionSourceEdit("Gas"),
+            onClick: () => handleEmissionSourceEdit("FuelGas"),
           },
           {
             text: "活動數據蒐集",
             href: "#",
-            onClick: () => handleEmissionActivityEdit("Gas"),
+            onClick: () => handleEmissionActivityEdit("FuelGas"),
           },
           {
             text: "年度活動清單",
             href: "#",
-            onClick: () => handleEmissionActivityReport("Gas"),
+            onClick: () => handleEmissionActivityReport("FuelGas"),
           },
         ],
       },
@@ -172,9 +202,21 @@ function App() {
         titleEn: "Septic Tank",
         icon: septicTankIcon,
         links: [
-          { text: "排放源鑑別", href: "#" },
-          { text: "活動數據蒐集", href: "#" },
-          { text: "年度活動清單", href: "#" },
+          {
+            text: "排放源鑑別",
+            href: "#",
+            onClick: () => handleEmissionSourceEdit("Sewage"),
+          },
+          {
+            text: "活動數據蒐集",
+            href: "#",
+            onClick: () => handleEmissionActivityEdit("Sewage"),
+          },
+          {
+            text: "年度活動清單",
+            href: "#",
+            onClick: () => handleEmissionActivityReport("Sewage"),
+          },
         ],
       },
       {
@@ -183,9 +225,21 @@ function App() {
         titleEn: "Fire Extinguisher",
         icon: fireexIcon,
         links: [
-          { text: "排放源鑑別", href: "#" },
-          { text: "活動數據蒐集", href: "#" },
-          { text: "年度活動清單", href: "#" },
+          {
+            text: "排放源鑑別",
+            href: "#",
+            onClick: () => handleEmissionSourceEdit("Fireex"),
+          },
+          {
+            text: "活動數據蒐集",
+            href: "#",
+            onClick: () => handleEmissionActivityEdit("Fireex"),
+          },
+          {
+            text: "年度活動清單",
+            href: "#",
+            onClick: () => handleEmissionActivityReport("Fireex"),
+          },
         ],
       },
       {
@@ -194,9 +248,44 @@ function App() {
         titleEn: "Refrigerant",
         icon: refrigerantIcon,
         links: [
-          { text: "排放源鑑別", href: "#" },
-          { text: "活動數據蒐集", href: "#" },
-          { text: "年度活動清單", href: "#" },
+          {
+            text: "排放源鑑別",
+            href: "#",
+            onClick: () => handleEmissionSourceEdit("Refrigerant"),
+          },
+          {
+            text: "活動數據蒐集",
+            href: "#",
+            onClick: () => handleEmissionActivityEdit("Refrigerant"),
+          },
+          {
+            text: "年度活動清單",
+            href: "#",
+            onClick: () => handleEmissionActivityReport("Refrigerant"),
+          },
+        ],
+      },
+      {
+        id: "Other",
+        titleZh: "其他",
+        titleEn: "Other",
+        icon: otherIcon,
+        links: [
+          {
+            text: "排放源鑑別",
+            href: "#",
+            onClick: () => handleEmissionSourceEdit("Other"),
+          },
+          {
+            text: "活動數據蒐集",
+            href: "#",
+            onClick: () => handleEmissionActivityEdit("Other"),
+          },
+          {
+            text: "年度活動清單",
+            href: "#",
+            onClick: () => handleEmissionActivityReport("Other"),
+          },
         ],
       },
       {
@@ -205,9 +294,44 @@ function App() {
         titleEn: "Electricity",
         icon: electricityIcon,
         links: [
-          { text: "排放源鑑別", href: "#" },
-          { text: "活動數據蒐集", href: "#" },
-          { text: "年度活動清單", href: "#" },
+          {
+            text: "排放源鑑別",
+            href: "#",
+            onClick: () => handleEmissionSourceEdit("Electricity"),
+          },
+          {
+            text: "活動數據蒐集",
+            href: "#",
+            onClick: () => handleEmissionActivityEdit("Electricity"),
+          },
+          {
+            text: "年度活動清單",
+            href: "#",
+            onClick: () => handleEmissionActivityReport("Electricity"),
+          },
+        ],
+      },
+      {
+        id: "greenElectricity",
+        titleZh: "能源屬性憑證",
+        titleEn: "Green Electricity",
+        icon: electricityIcon,
+        links: [
+          {
+            text: "排放源鑑別",
+            href: "#",
+            onClick: () => handleEmissionSourceEdit("GreenElectricity"),
+          },
+          {
+            text: "活動數據蒐集",
+            href: "#",
+            onClick: () => handleEmissionActivityEdit("GreenElectricity"),
+          },
+          {
+            text: "年度活動清單",
+            href: "#",
+            onClick: () => handleEmissionActivityReport("GreenElectricity"),
+          },
         ],
       },
     ],
@@ -218,9 +342,21 @@ function App() {
         titleEn: "Water",
         icon: waterIcon,
         links: [
-          { text: "排放源鑑別", href: "#" },
-          { text: "活動數據蒐集", href: "#" },
-          { text: "年度活動清單", href: "#" },
+          {
+            text: "排放源鑑別",
+            href: "#",
+            onClick: () => handleEmissionSourceEdit("Water"),
+          },
+          {
+            text: "活動數據蒐集",
+            href: "#",
+            onClick: () => handleEmissionActivityEdit("Water"),
+          },
+          {
+            text: "年度活動清單",
+            href: "#",
+            onClick: () => handleEmissionActivityReport("Water"),
+          },
         ],
       },
       {
@@ -229,9 +365,21 @@ function App() {
         titleEn: "Waste",
         icon: wasteIcon,
         links: [
-          { text: "排放源鑑別", href: "#" },
-          { text: "活動數據蒐集", href: "#" },
-          { text: "年度活動清單", href: "#" },
+          {
+            text: "排放源鑑別",
+            href: "#",
+            onClick: () => handleEmissionSourceEdit("Waste"),
+          },
+          {
+            text: "活動數據蒐集",
+            href: "#",
+            onClick: () => handleEmissionActivityEdit("Waste"),
+          },
+          {
+            text: "年度活動清單",
+            href: "#",
+            onClick: () => handleEmissionActivityReport("Waste"),
+          },
         ],
       },
       {
@@ -251,7 +399,7 @@ function App() {
         id: "affairs",
         titleZh: "環保經費支出",
         titleEn: "Affairs",
-        icon: "🏢", // 使用 emoji 作為臨時圖示
+        icon: affairsIcon,
         links: [
           { text: "環保事務經費支出", href: "#" },
           { text: "地點資料", href: "#" },
@@ -263,7 +411,7 @@ function App() {
         id: "inventory",
         titleZh: "碳排清冊",
         titleEn: "inventory",
-        icon: "🏢", // 使用 emoji 作為臨時圖示
+        icon: inventoryIcon, // 使用清單加環保的組合圖示
         links: [
           { text: "碳排清冊", href: "#" },
           { text: "公司廢棄物清冊", href: "#" },
@@ -275,7 +423,7 @@ function App() {
         id: "inventorySummary",
         titleZh: "碳排清冊總表",
         titleEn: "inventorySummary",
-        icon: "🏢", // 使用 emoji 作為臨時圖示
+        icon: inventoryIcon, // 使用圖表加環保的組合圖示
         links: [{ text: "碳排清冊總表", href: "#" }],
       },
     ],
@@ -286,8 +434,17 @@ function App() {
         titleEn: "Company",
         icon: "🏢", // 使用 emoji 作為臨時圖示
         links: [
-          { text: "公司資料", href: "#" },
-          { text: "地點資料", href: "#" },
+          { 
+            text: "公司資料", 
+            href: "#",
+            onClick: () => setShowCompanyManager(true)
+          },
+          { 
+            text: "地點資料", 
+            href: "#",
+            onClick: () => setShowLocationManager(true)
+          },
+          
         ],
       },
       {
@@ -362,6 +519,11 @@ function App() {
       </div>
     </div>
   );
+
+  // 如果未認證，顯示登入畫面
+  if (!isAuthenticated) {
+    return <Login onLogin={handleLogin} />;
+  }
 
   return (
     <div className="snippet-body" id="body-pd">
@@ -460,6 +622,13 @@ function App() {
         <div className="user-info">
           <div className="user-avatar">👤</div>
           <span className="username">{username}</span>
+          <button 
+            className="logout-btn" 
+            onClick={handleLogout}
+            title="登出"
+          >
+            🚪
+          </button>
         </div>
       </div>
 
@@ -569,6 +738,16 @@ function App() {
           company={emissionEditParams.company}
           onClose={closeEmissionActivityReport}
         />
+      )}
+
+      {/* 公司管理模態框 */}
+      {showCompanyManager && (
+        <CompanyManager onClose={closeCompanyManager} />
+      )}
+
+      {/* 地點管理模態框 */}
+      {showLocationManager && (
+        <LocationManager onClose={closeLocationManager} />
       )}
     </div>
   );

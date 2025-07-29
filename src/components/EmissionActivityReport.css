@@ -285,8 +285,27 @@
 
 .action-buttons {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
+  justify-content: center;
+}
+
+.action-header {
+  background: linear-gradient(135deg, #4caf50, #66bb6a) !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  padding: 10px !important;
+}
+
+.action-header .action-buttons {
+  margin: 0;
+}
+
+.action-header .btn {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  min-width: 60px;
 }
 
 /* 按鈕樣式 */
@@ -327,14 +346,23 @@
 }
 
 /* 數據表格區域 */
+.data-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 .data-section h3 {
   color: #2d5016;
-  margin-bottom: 20px;
+  margin: 0;
   font-size: 1.2rem;
   font-weight: 600;
   display: flex;
   align-items: center;
   gap: 10px;
+  justify-content: flex-start;
+  text-align: left;
 }
 
 .data-section h3::before {
@@ -565,12 +593,31 @@
     gap: 15px;
   }
 
-  .action-buttons {
+  .data-header {
     flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .action-buttons {
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .action-header .action-buttons {
+    flex-direction: row;
+    gap: 5px;
+  }
+
+  .action-header .btn {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    min-width: 50px;
   }
 
   .btn {
-    width: 100%;
+    width: auto;
     justify-content: center;
   }
 

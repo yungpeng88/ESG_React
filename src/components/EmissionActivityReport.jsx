@@ -428,9 +428,16 @@ const EmissionActivityReport = ({ emissionName, year, company, onClose }) => {
                       </div>
                     </div>
 
+                  </div>
+                </div>
+
+                {/* 數據表格 */}
+                <div className="data-section">
+                  <div className="data-header">
+                    <h3>詳細數據</h3>
                     <div className="action-buttons">
                       <button
-                        className="btn btn-secondary"
+                        className="btn btn-secondary btn-sm"
                         onClick={() =>
                           setFilterConfig({
                             location: "all",
@@ -440,31 +447,28 @@ const EmissionActivityReport = ({ emissionName, year, company, onClose }) => {
                           })
                         }
                       >
-                        清除篩選
+                        清除篩選 
                       </button>
                       <button
-                        className="btn btn-primary"
+                        className="btn btn-primary btn-sm"
                         onClick={() => handleExport("csv")}
                       >
-                        📊 導出 CSV
+                        📊 CSV
                       </button>
                       <button
-                        className="btn btn-primary"
+                        className="btn btn-primary btn-sm"
                         onClick={() => handleExport("pdf")}
                       >
-                        📄 導出 PDF
+                        📄 PDF
                       </button>
                     </div>
                   </div>
-                </div>
-
-                {/* 數據表格 */}
-                <div className="data-section">
-                  <h3>詳細數據</h3>
+                  
                   <div className="table-responsive">
                     <table className="report-table">
                       <thead>
                         <tr>
+                         
                           <th
                             onClick={() => handleSort("period")}
                             className="sortable"
@@ -524,6 +528,7 @@ const EmissionActivityReport = ({ emissionName, year, company, onClose }) => {
                       <tbody>
                         {filteredData.map((item) => (
                           <tr key={item.id}>
+                            <td></td>
                             <td className="period-cell">{item.period}</td>
                             <td>{item.location}</td>
                             <td>{item.equipment}</td>
